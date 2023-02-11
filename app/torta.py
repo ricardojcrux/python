@@ -1,12 +1,14 @@
 import tools, charts, read
+import pandas as pd
 
 def porc():
     continent = input('Type a Continent: ')
-    data = read.read_csv('data.csv')
-    data = list(filter(lambda item:item['Continent'] == continent,data))
-    countries = list(map(lambda x:x['Country'],data))
-    porc = list(map(lambda x:x['World Population Percentage'],data))
-    charts.pie_chart(countries,porc)
+
+    df = pd.read_csv('data.csv')
+    df = df[df['Continent'] == continent]
+    countries = df['Country'].values
+    porc = df['World Population Percentage'].values
+    charts.pie_chart(continent,countries,porc)
 
 if __name__ == '__main__':
     porc()
